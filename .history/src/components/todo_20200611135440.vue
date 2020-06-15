@@ -1,0 +1,188 @@
+<template>
+  <div>
+    <!-- 第一个订单 -->
+    <div class="d-f">
+      <div class="top-1">
+        <el-table :data="tableData" style="width: 100%">
+          <el-table-column prop="num" label="Order-No" width="300"></el-table-column>
+          <el-table-column prop="price" label="Price" width="250"></el-table-column>
+          <el-table-column prop="status" label="Status">
+
+            <template slot-scope="scope">
+              <div v-if="scope.row.status===0">
+                <el-tag type="danger">pending</el-tag>
+              </div>
+              <div v-if="scope.row.status===1">
+                <el-tag type="success">success</el-tag>
+              </div>
+            </template>
+
+          </el-table-column>
+        </el-table>
+      </div>
+      <!-- 第二个 -->
+      <div class="top-2">
+        <div class="jjk d-f">
+          <i class="kk  el-icon-arrow-down"></i>
+          <div class="kk-1">Todo List</div>
+        </div>
+        <div v-for="(item,index) in todolist" :key="index">
+           <div class="pos d-f">
+             <input type="checkbox" class="man">
+           <div class="f-s20 mc">{{item}}</div>
+            </div>
+        </div>
+        <div class="fei d-f">
+          <div>6 items left</div>
+          <div>
+
+          </div>
+          <div>Active</div>
+          <div></div>
+        </div>
+      
+      </div>
+      <!-- 第三个进度条 -->
+      <div class="top-2">
+        <img src="https://wpimg.wallstcn.com/e7d23d71-cf19-4b90-a1cc-f56af8c0903d.png" alt="" class="m-t2">
+        <div v-for="(item,index) in code" :key="index">
+          <div class="hei">{{item.name}}</div>
+          <div v-if="item.progress!==1" class="hai">
+          <el-progress :percentage="item.progress*100"></el-progress>
+          </div>
+          <div v-if="item.progress===1" class="hai">
+          <el-progress :percentage="100" status="success"></el-progress>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import axios from "axios";
+export default {
+  name: "",
+  props: {},
+  components: {},
+  data() {
+    return {
+      // 第一个订单的定义
+      tableData: [],
+      // 第三个进度条的定义
+      code:[],
+      todolist:[
+        "star this repository",
+        "fork this repository",
+        "follow author",
+        "vue -admin",
+        "vue",
+        "element-ui",
+        "axios",
+        "webpack"
+      ]
+    };
+  },
+  methods: {
+    // 订单请求
+    getData() {
+      axios
+        .get(`/api/orderData`)
+        .then(res => {
+          this.tableData = res.data.data;
+          console.log(res.data);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    // 进度条请求
+     getDatas() {
+      axios
+        .get(`/api/progress`)
+        .then(res => {
+          this. code= res.data.data;
+          console.log(res.data);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+  },
+  mounted() {
+     // 第一个订单请求
+    this.getData();
+    // 第三个进度条请求
+    this.getDatas()
+  },
+  watch: {},
+  computed: {}
+};
+</script>
+
+<style scoped lang='scss'>
+.top-1 {
+  width: 750px;
+  height: 500px;
+  background: white;
+  margin-top: 20px;
+  box-shadow: 1px 1px 10px #ccc;
+}
+.top-2 {
+  width: 435px;
+  height: 500px;
+  background: white;
+  margin-top: 20px;
+  margin-left: 20px;
+  box-shadow: 1px 1px 10px #ccc;
+}
+.hai {
+  text-align: left;
+   margin-left: 20px;
+   margin-top: 10px;
+}
+.hei {
+   text-align: left;
+   margin-top: 20px;
+   margin-left: 20px;
+}
+.jjk {
+  width: 435px;
+  height: 60px;
+  background: transparent;
+  border-bottom: 1px solid #ccc;
+  position: relative;
+}
+.jjk {
+  font-size: 24px;
+}
+.kk {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+}
+.kk-1 {
+  position: absolute;
+  right: 20px;
+  top: 30px;
+}
+.man {
+  width: 35px;
+  height: 25px;
+  margin-top: 18px;
+}
+.pos {
+  text-align: left;
+  margin-left: 20px;
+}
+.mc {
+  margin-left: 40px;
+   margin-top: 28px;
+}
+.fei {
+  width: 435px;
+  height: 70px;
+  border: 1px solid #cccccc;
+  margin-top: 20px;
+}
+</style>

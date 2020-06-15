@@ -1,0 +1,46 @@
+<template>
+ <div>
+    <div class="map">
+        <img src="./2ljdp42vefm.gif" alt=""  style="position:absolute;z-index:-1;width:100%;height:100%;top:0px;left:0px;">
+
+        <el-card class="item">
+        <div slot="header" class="clearfix">
+          <span>欢迎来到卢本伟广场</span>
+        </div>
+       
+      </el-card>
+    </div>
+ </div>
+</template>
+
+<script>
+ export default {
+   name: '',
+   props: {
+   },
+   components: {
+
+   },
+   data () {
+     return {
+
+     }
+   },
+   methods: {
+
+   },
+   mounted() {
+
+   },
+   watch: {
+
+   },
+   computed: {
+
+   }
+ }
+</script>
+
+<style scoped lang='scss'>
+   
+</style>
